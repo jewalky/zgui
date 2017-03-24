@@ -17,12 +17,15 @@ class Drawer ui
 	private double ClipTop;
 	private double ClipBottom;
 	private double Scale;
+	
+	private Element Base;
 
 	static Drawer Create(Element el)
 	{
 		Drawer d = new ('Drawer');
+		d.Base = el;
 		// calculate screen x/y.
-		Rect sr = el.GetScreenRect();
+		Rect sr = d.Base.GetScreenRect();
 		d.ClipLeft = sr.GetLeft();
 		d.ClipRight = sr.GetRight();
 		d.ClipTop = sr.GetTop();
@@ -33,7 +36,7 @@ class Drawer ui
 		d.VirtualX = d.ClipLeft;
 		d.VirtualY = d.ClipTop;
 		d.Scale = 1.0;
-		Element p = el;
+		Element p = d.Base;
 		while (p)
 		{
 			d.VirtualWidth /= p.mScale;
@@ -45,6 +48,15 @@ class Drawer ui
 		}
 		
 		return d;
+	}
+	
+	void SetClipRect(Rect r)
+	{
+		Rect sr = Base.GetScreenRect();
+		ClipLeft = sr.GetLeft() + r.X*Scale;
+		ClipRight = ClipLeft + r.Width*Scale;
+		ClipTop = sr.GetTop() + r.Y*Scale;
+		ClipBottom = ClipTop + r.Height*Scale;
 	}
 	
 	void DrawTexture(TextureID tex, bool animated, double x, double y, double alpha = 1.0)
