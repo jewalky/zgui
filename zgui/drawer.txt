@@ -7,22 +7,27 @@ class Drawer ui
 		Align_Center
 	}
 
-	private double VirtualX;
-	private double VirtualY;
-	private double VirtualWidth;
-	private double VirtualHeight;
+	protected double VirtualX;
+	protected double VirtualY;
+	protected double VirtualWidth;
+	protected double VirtualHeight;
 	
-	private double ClipLeft;
-	private double ClipRight;
-	private double ClipTop;
-	private double ClipBottom;
-	private double Scale;
+	protected double ClipLeft;
+	protected double ClipRight;
+	protected double ClipTop;
+	protected double ClipBottom;
+	protected double Scale;
 	
 	private Element Base;
 
 	static Drawer Create(Element el)
 	{
-		Drawer d = new ('Drawer');
+		return Drawer.CreateMod('Drawer', el);
+	}
+
+	static Drawer CreateMod(class<Drawer> cls, Element el)
+	{
+		Drawer d = Drawer(new(cls));
 		d.Base = el;
 		// calculate screen x/y.
 		Rect sr = d.Base.GetScreenRect();
@@ -63,8 +68,8 @@ class Drawer ui
 	{
 		Screen.DrawTexture(tex, animated, VirtualX+x, VirtualY+y,
 		
-			DTA_VirtualWidth, int(VirtualWidth),
-			DTA_VirtualHeight, int(VirtualHeight),
+			DTA_VirtualWidthF, VirtualWidth,
+			DTA_VirtualHeightF, VirtualHeight,
 			DTA_KeepRatio, true,
 			DTA_ClipTop, int(ClipTop),
 			DTA_ClipLeft, int(ClipLeft),
@@ -79,8 +84,8 @@ class Drawer ui
 	{
 		Screen.DrawChar(font, normalcolor, VirtualX+x, VirtualY+y, character,
 		
-			DTA_VirtualWidth, int(VirtualWidth),
-			DTA_VirtualHeight, int(VirtualHeight),
+			DTA_VirtualWidthF, VirtualWidth,
+			DTA_VirtualHeightF, VirtualHeight,
 			DTA_KeepRatio, true,
 			DTA_ClipTop, int(ClipTop),
 			DTA_ClipLeft, int(ClipLeft),
@@ -108,8 +113,8 @@ class Drawer ui
 	
 		Screen.DrawText(font, normalcolor, VirtualX+x, VirtualY+y, text,
 			
-			DTA_VirtualWidth, int(VirtualWidth),
-			DTA_VirtualHeight, int(VirtualHeight),
+			DTA_VirtualWidthF, VirtualWidth,
+			DTA_VirtualHeightF, VirtualHeight,
 			DTA_KeepRatio, true,
 			DTA_ClipTop, int(ClipTop),
 			DTA_ClipLeft, int(ClipLeft),
