@@ -7,16 +7,16 @@ class Drawer ui
 		Align_Center
 	}
 
-	double VirtualX;
-	double VirtualY;
-	double VirtualWidth;
-	double VirtualHeight;
+	private double VirtualX;
+	private double VirtualY;
+	private double VirtualWidth;
+	private double VirtualHeight;
 	
-	double ClipLeft;
-	double ClipRight;
-	double ClipTop;
-	double ClipBottom;
-	double Scale;
+	private double ClipLeft;
+	private double ClipRight;
+	private double ClipTop;
+	private double ClipBottom;
+	private double Scale;
 
 	static Drawer Create(Element el)
 	{
