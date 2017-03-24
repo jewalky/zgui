@@ -145,7 +145,7 @@ class Element ui
 	
 	bool OnProcess(ElementEvent ev)
 	{
-		if (!mParent)
+		if (!mParent && ev.Type == UiEvent.Type_MouseMove)
 		{
 			mMouseX = ev.MouseX;
 			mMouseY = ev.MouseY;
@@ -160,6 +160,23 @@ class Element ui
 	
 		for (int i = 0; i < mChildren.Size(); i++)
 			if (mChildren[i].OnProcess(ev2)) return true;
+		
+		// this is terrible. help.
+		if (ev2.Type > UiEvent.Type_FirstMouseEvent && ev2.Type < UiEvent.Type_LastMouseEvent)
+		{
+			// alter the coordinates for this particular element.
+			double finalScale = 1;
+			Element p = self;
+			vector2 mc = (mMouseX, mMouseY);
+			while (p)
+			{
+				finalScale *= p.mScale;
+				p = p.mParent;
+			}
+			
+			ev2.MouseX = mc.x / finalScale;
+			ev2.MouseY = mc.y / finalScale;
+		}
 		
 		return Process(ev2);
 	}
