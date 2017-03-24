@@ -1,5 +1,12 @@
 class Drawer ui
 {
+	enum TextAlign
+	{
+		Align_Left,
+		Align_Right,
+		Align_Center
+	}
+
 	double VirtualX;
 	double VirtualY;
 	double VirtualWidth;
@@ -40,7 +47,7 @@ class Drawer ui
 		return d;
 	}
 	
-	void DrawTexture(TextureID tex, bool animated, double x, double y)
+	void DrawTexture(TextureID tex, bool animated, double x, double y, double alpha = 1.0)
 	{
 		Screen.DrawTexture(tex, animated, VirtualX+x, VirtualY+y,
 		
@@ -50,12 +57,13 @@ class Drawer ui
 			DTA_ClipTop, int(ClipTop),
 			DTA_ClipLeft, int(ClipLeft),
 			DTA_ClipBottom, int(ClipBottom),
-			DTA_ClipRight, int(ClipRight)
+			DTA_ClipRight, int(ClipRight),
+			DTA_Alpha, alpha
 		
 		);
 	}
 	
-	void DrawChar(Font font, int normalcolor, double x, double y, int character)
+	void DrawChar(Font font, int normalcolor, double x, double y, int character, double alpha = 1.0)
 	{
 		Screen.DrawChar(font, normalcolor, VirtualX+x, VirtualY+y, character,
 		
@@ -65,13 +73,27 @@ class Drawer ui
 			DTA_ClipTop, int(ClipTop),
 			DTA_ClipLeft, int(ClipLeft),
 			DTA_ClipBottom, int(ClipBottom),
-			DTA_ClipRight, int(ClipRight)
+			DTA_ClipRight, int(ClipRight),
+			DTA_Alpha, alpha
 		
 		);
 	}
 	
-	void DrawText(Font font, int normalcolor, double x, double y, String text)
+	void DrawText(Font font, int normalcolor, double x, double y, String text, double alpha = 1.0, int align = Align_Left, int wrapwidth = 0)
 	{
+		if (wrapwidth > 0)
+		{
+			BrokenLines bl = font.BreakLines(text, wrapwidth);
+			for (int i = 0; i < bl.Count(); i++)
+				DrawText(font, normalcolor, x, y+i*font.GetHeight(), bl.StringAt(i), alpha, align, 0);
+			return;
+		}
+		
+		if (align == Align_Right)
+			x -= font.StringWidth(text);
+		else if (align == Align_Center)
+			x -= double(font.StringWidth(text))/2;
+	
 		Screen.DrawText(font, normalcolor, VirtualX+x, VirtualY+y, text,
 			
 			DTA_VirtualWidth, int(VirtualWidth),
@@ -80,7 +102,8 @@ class Drawer ui
 			DTA_ClipTop, int(ClipTop),
 			DTA_ClipLeft, int(ClipLeft),
 			DTA_ClipBottom, int(ClipBottom),
-			DTA_ClipRight, int(ClipRight)
+			DTA_ClipRight, int(ClipRight),
+			DTA_Alpha, alpha
 			
 		);
 	}
