@@ -75,6 +75,22 @@ class Element ui
 			case InputEvent.Key_Mouse3:
 				uiev.Type = UiEvent.Type_MButtonDown;
 				return OnProcess(uiev);
+				
+			case InputEvent.Key_MWheelUp:
+				uiev.Type = UiEvent.Type_WheelUp;
+				return OnProcess(uiev);
+				
+			case InputEvent.Key_MWheelDown:
+				uiev.Type = UiEvent.Type_WheelDown;
+				return OnProcess(uiev);
+				
+			case InputEvent.Key_MWheelLeft:
+				uiev.Type = UiEvent.Type_WheelLeft;
+				return OnProcess(uiev);
+				
+			case InputEvent.Key_WheelRight:
+				uiev.Type = UiEvent.Type_WheelRight;
+				return OnProcess(uiev);
 			}
 		}
 		else if (ev.Type == InputEvent.Type_KeyUp)
