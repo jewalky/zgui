@@ -30,7 +30,6 @@ class Element ui
 		other.mParent = self;
 		if (mChildren.Find(other)==mChildren.Size())
 			mChildren.Push(other);
-		other.OnCreate();
 	}
 	
 	// geometry data.
@@ -47,6 +46,7 @@ class Element ui
 		mScale = 1;
 		mMouseX = 0;
 		mMouseY = 0;
+		OnCreate();
 		return self;
 	}
 	
