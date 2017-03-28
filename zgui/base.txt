@@ -88,7 +88,7 @@ class Element ui
 				uiev.Type = UiEvent.Type_WheelLeft;
 				return OnProcess(uiev);
 				
-			case InputEvent.Key_WheelRight:
+			case InputEvent.Key_MWheelRight:
 				uiev.Type = UiEvent.Type_WheelRight;
 				return OnProcess(uiev);
 			}
