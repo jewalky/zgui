@@ -237,7 +237,7 @@ class Element ui
 			r.Y += p.mRect.Y;
 			p = p.mParent;
 		}
-		Console.Printf("ScreenRect = %s", r.ToString());
+		//Console.Printf("ScreenRect = %s", r.ToString());
 		return r;
 	}
 	
