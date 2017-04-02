@@ -40,7 +40,7 @@ class Drawer ui
 		d.VirtualHeight = Screen.GetHeight();
 		d.VirtualX = d.ClipLeft;
 		d.VirtualY = d.ClipTop;
-		d.Scale = 1.0;
+		d.Scale = d.Base.mScale;
 		Element p = d.Base;
 		while (p)
 		{
