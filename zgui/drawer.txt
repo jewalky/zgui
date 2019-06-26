@@ -170,6 +170,77 @@ class Drawer ui
 		if (cr.Width <= 0 || cr.Height <= 0) return;
 		Screen.Dim(col, alpha, cr.X, cr.Y, cr.Width, cr.Height);
 	}
+
+	void DrawLine(double x1, double y1, double x2, double y2, double thickness, int color, int alpha)
+	{
+		x1 = x1*Scale+ClipLeft;
+		x2 = x2*Scale+ClipLeft;
+		y1 = y1*Scale+ClipTop;
+		y2 = y2*Scale+ClipTop;
+		// do some clipping
+		double rateXY = 0.0;
+		if (y2 != y1)
+		{
+			double dx = x2-x1;
+			double dy = y2-y1;
+			rateXY = double(dx)/double(dy);
+		}
+		
+		for (int i = 0; i < 2; i++)
+		{
+			// check x1,y1
+			if (y1 < ClipTop)
+			{
+				x1 += (ClipTop - y1) * rateXY;
+				y1 = ClipTop;
+			}
+			if (x1 < ClipLeft)
+			{
+				if (rateXY != 0) y1 += (ClipLeft - x1) / rateXY;
+				x1 = ClipLeft;
+			}
+			// check x2,y2
+			if (y2 < ClipTop)
+			{
+				x2 += (ClipTop - y2) * rateXY;
+				y2 = ClipTop;
+			}
+			if (x2 < ClipLeft)
+			{
+				if (rateXY != 0) y2 += (ClipLeft - x2) / rateXY;
+				x2 = ClipLeft;
+			}
+			// check x1,y1
+			if (y1 > ClipBottom)
+			{
+				x1 -= (y1 - ClipBottom) * rateXY;
+				y1 = ClipBottom;
+			}
+			if (x1 > ClipRight)
+			{
+				if (rateXY != 0) y1 -= (x1 - ClipRight) / rateXY;
+				x1 = ClipRight;
+			}
+			// check x2,y2
+			if (y2 > ClipBottom)
+			{
+				x2 -= (y2 - ClipBottom) * rateXY;
+				y2 = ClipBottom;
+			}
+			if (x2 > ClipRight)
+			{
+				if (rateXY != 0) y2 -= (x2 - ClipRight) / rateXY;
+				x2 = ClipRight;
+			}
+		}
+		
+		if (x1 == x2 && (x1 == ClipLeft || x1 == ClipRight))
+			return;
+		if (y1 == y2 && (y1 == ClipBottom || y1 == ClipTop))
+			return;
+
+		Screen.DrawThickLine(x1, y1, x2, y2, thickness*Scale, color, alpha);
+	}
 	
 	void Clear(Color col, int x, int y, int w, int h, int palcolor = -1)
 	{
