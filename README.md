@@ -7,3 +7,5 @@ All it requires is that you call OnDraw, OnTick, OnProcessUi and OnProcessInput 
 Additionally, it provides SetHudSize/SetHudClipRect-like functionality, but with direct drawers.
 
 The example code can be found here: https://forum.zdoom.org/viewtopic.php?p=986562#p986562
+
+Test commit
